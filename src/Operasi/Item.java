@@ -13,7 +13,8 @@ public class Item {
     private String nama; //Atribut nama barang
     private float harga; //Atribut Harga barang
     private int jumlah;// Atribut jumlah barang
-
+    
+    //Constructor
     public Item(String nama, float harga, int jumlah) {
         this.nama = nama;
         this.harga = harga;
@@ -44,7 +45,14 @@ public class Item {
         this.jumlah = jumlah;
     }
     
+    //Method untuk mendapatkan harga totals
+    public float getTotal(){
+        float total = this.harga * this.jumlah;
+        return total;
+    }
     
-    
-    
+    @Override
+    public String toString(){
+        return this.nama;
+    }
 }
