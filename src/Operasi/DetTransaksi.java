@@ -30,6 +30,17 @@ public class DetTransaksi {
         this.Total=Total;
     }
     
+    public String Info(){
+        setTotal();
+        String info = "";
+        info += "Kode:" + this.kode + "\n";
+        info += "Daftar Belanja: \n";
+        for(Item items : this.barang){
+            info +="\t" + items.getNama() + items.getJumlah() + items.getHarga();
+        }
+        info += "\t"+"Total :" +this.Total;
+        return info;
+    }
     
     
 } 
