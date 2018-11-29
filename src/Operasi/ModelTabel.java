@@ -1,27 +1,22 @@
 package Operasi;
 
-import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
+
 
 /**
  *
  * @author Alfaza
  */
-public class ModelTabel {
-    private ArrayList<Item> barang;
-
-    public ModelTabel() {
-        this.barang = new ArrayList<>();
-    }
+public class ModelTabel extends DefaultTableModel{
+    private String[] columns;
     
-    public Item [] toArray() {
-        Item[] barang = new Item[this.barang.size()];
-        for(int i=0; i<barang.length; i++){
-            barang[i] = this.barang.get(i);
+    public ModelTabel(){
+        this.columns = new String []{
+            "Nama", "Harga", "Jumlah"
+        };
+    }
+        public String[] getColumnName(){
+            return this.columns;
         }
-        return barang;
     }
-    public void addItem(Item item){
-        this.barang.add(item);
-    }
-    
-}
