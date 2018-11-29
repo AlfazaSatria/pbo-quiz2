@@ -120,12 +120,7 @@
     <Component class="javax.swing.JComboBox" name="ComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -136,6 +131,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAddActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TextJumlah">
     </Component>
@@ -166,11 +164,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonCancelActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonRemove">
       <Properties>
         <Property name="text" type="java.lang.String" value="Remove"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonRemoveActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

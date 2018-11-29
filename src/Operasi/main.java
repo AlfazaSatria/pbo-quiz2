@@ -8,6 +8,7 @@ package Operasi;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -111,6 +112,20 @@ public class main extends javax.swing.JFrame {
     
     //
     
+    private void newtrns() {
+        this.TextJumlah.setText("");
+        this.TextCode.setText("");
+        this.ButtonNew.setEnabled(true);
+        this.ButtonSave.setEnabled(false);
+        this.ButtonCancel.setEnabled(false);
+        this.ButtonAdd.setEnabled(false);
+        this.ButtonRemove.setEnabled(false);
+        this.TextJumlah.setEnabled(false);
+        this.ComboBox.setEnabled(false);
+        this.tbModel.setRowCount(0);
+        this.keranjang.clear();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -147,9 +162,12 @@ public class main extends javax.swing.JFrame {
 
         jLabel2.setText("Items");
 
-        ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         ButtonAdd.setText("Add");
+        ButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAddActionPerformed(evt);
+            }
+        });
 
         TabelListBarang.setColumns(20);
         TabelListBarang.setRows(5);
@@ -163,8 +181,18 @@ public class main extends javax.swing.JFrame {
         });
 
         ButtonCancel.setText("Cancel");
+        ButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonCancelActionPerformed(evt);
+            }
+        });
 
         ButtonRemove.setText("Remove");
+        ButtonRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRemoveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,16 +256,65 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewActionPerformed
-        // TODO add your handling code here:
+        this.TextJumlah.setText("1");
+        this.ButtonNew.setEnabled(false);
+        this.ButtonCancel.setEnabled(true);
+        this.ButtonAdd.setEnabled(true);
+        this.TextJumlah.setEnabled(true);
+        this.ComboBox.setEnabled(true);
+        this.TextCode.setText(this.setCode());
     }//GEN-LAST:event_ButtonNewActionPerformed
 
     private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSaveActionPerformed
-        // TODO add your handling code here:
+        try {
+            for (int i=0; i<tbModel.getRowCount(); i++){
+                String nama = tbModel.getValueAt(i, 0).toString();
+                float harga = new Float(tbModel.getValueAt(i, 1).toString());
+                int jumlah = new Integer(tbModel.getValueAt(i, 2).toString());
+                this.keranjang.add(new Item(nama,harga,jumlah));
+            }
+            DetTransaksi trns = new DetTransaksi(this.code, this.keranjang);
+            StringBuilder str = new StringBuilder();
+            str.append(trns.Info());
+            JOptionPane.showMessageDialog(this, str ,"Detail Transaksi",JOptionPane.INFORMATION_MESSAGE);
+            newtrns();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_ButtonSaveActionPerformed
 
     private void TextCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextCodeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TextCodeActionPerformed
+
+    private void ButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCancelActionPerformed
+        newtrns();
+        this.downId();
+    }//GEN-LAST:event_ButtonCancelActionPerformed
+
+    private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
+        String nama = this.ComboBox.getSelectedItem().toString();
+        int jumlah = new Integer(this.TextJumlah.getText());
+        if(isDuplicate(nama)) {
+            updateJumlah(nama,jumlah);
+        }else{
+            tbModel.addRow(TambahBarang(nama, jumlah));
+        }
+        this.CekKeranjang();
+    }//GEN-LAST:event_ButtonAddActionPerformed
+
+    private void ButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRemoveActionPerformed
+        if(TabelListBarang.getSelectedRow()<0){
+            String str = "Hapus Item";
+            JOptionPane.showMessageDialog(this, str,"Informasi", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int count = TabelListBarang.getSelectedRows().length;
+            for(int i=0; i<count; i++){
+                tbModel.removeRow(TabelListBarang.getSelectedRow());
+            }
+        }
+        this.CekKeranjang();
+    }//GEN-LAST:event_ButtonRemoveActionPerformed
 
     /**
      * @param args the command line arguments
