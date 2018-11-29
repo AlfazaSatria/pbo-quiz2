@@ -21,5 +21,8 @@ public class ModelCombo {
         return barang;
 }
     
+    public void TambahBarang (Item item){
+        this.barang.add(item);
+    }
     
 }
