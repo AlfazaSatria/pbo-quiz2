@@ -10,9 +10,14 @@ package Operasi;
  * @author Alfaza
  */
 public class Item {
-    private String nama; //Atribut nama barang
-    private float harga; //Atribut Harga barang
-    private int jumlah;// Atribut jumlah barang
+    private String nama; //Variabel nama barang
+    private float harga; //Variabel Harga barang
+    private int jumlah;// Variabel jumlah barang
+
+    public Item(String nama, float harga) {
+        this.nama = nama;
+        this.harga = harga;
+    }
     
     //Constructor
     public Item(String nama, float harga, int jumlah) {
@@ -45,7 +50,7 @@ public class Item {
         this.jumlah = jumlah;
     }
     
-    //Method untuk mendapatkan harga totals
+    //Getter Total
     public float getTotal(){
         float total = this.harga * this.jumlah;
         return total;

@@ -33,10 +33,10 @@ public class DetTransaksi {
     public String Info(){
         setTotal();
         String info = "";
-        info += "Kode:" + this.kode + "\n";
+        info += "Kode\t\t:" + this.kode + "\n";
         info += "Daftar Belanja: \n";
         for(Item items : this.barang){
-            info +="\t" + items.getNama() + items.getJumlah() + items.getHarga();
+            info +="\t" +items.getJumlah()+" "+ items.getNama()+":"+ items.getHarga()+"\n";
         }
         info += "\t"+"Total :" +this.Total;
         return info;
