@@ -8,6 +8,7 @@ package Operasi;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -30,6 +31,7 @@ public class main extends javax.swing.JFrame {
         
         ModelTabel tablemodel = new ModelTabel();
         this.tbModel = new DefaultTableModel(tablemodel.getColumnName(), 0);
+        
         initComponents();
     }
     
@@ -97,7 +99,7 @@ public class main extends javax.swing.JFrame {
     
     //
     private boolean isEmpty(){
-        return this.TabelListBarang.getModel().getRowCount()<1;
+        return this.TabelListBarang.getModel().getRowCount()<=0;
     }
     //
     private void CekKeranjang(){
@@ -134,19 +136,20 @@ public class main extends javax.swing.JFrame {
         TextCode = new javax.swing.JTextField();
         ButtonNew = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        ComboBox = new javax.swing.JComboBox<>();
+        ComboBox = new JComboBox<Item>(this.comboModel.toArray());
         ButtonAdd = new javax.swing.JButton();
         TextJumlah = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TabelListBarang = new javax.swing.JTextArea();
         ButtonSave = new javax.swing.JButton();
         ButtonCancel = new javax.swing.JButton();
         ButtonRemove = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TabelListBarang = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Code");
 
+        TextCode.setEnabled(false);
         TextCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextCodeActionPerformed(evt);
@@ -162,18 +165,23 @@ public class main extends javax.swing.JFrame {
 
         jLabel2.setText("Items");
 
+        ComboBox.setEnabled(false);
+        ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxActionPerformed(evt);
+            }
+        });
+
         ButtonAdd.setText("Add");
+        ButtonAdd.setEnabled(false);
         ButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonAddActionPerformed(evt);
             }
         });
 
-        TabelListBarang.setColumns(20);
-        TabelListBarang.setRows(5);
-        jScrollPane1.setViewportView(TabelListBarang);
-
         ButtonSave.setText("Save");
+        ButtonSave.setEnabled(false);
         ButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonSaveActionPerformed(evt);
@@ -181,6 +189,7 @@ public class main extends javax.swing.JFrame {
         });
 
         ButtonCancel.setText("Cancel");
+        ButtonCancel.setEnabled(false);
         ButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonCancelActionPerformed(evt);
@@ -188,11 +197,15 @@ public class main extends javax.swing.JFrame {
         });
 
         ButtonRemove.setText("Remove");
+        ButtonRemove.setEnabled(false);
         ButtonRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonRemoveActionPerformed(evt);
             }
         });
+
+        TabelListBarang.setModel(this.tbModel);
+        jScrollPane2.setViewportView(TabelListBarang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,32 +213,32 @@ public class main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(TextCode, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(ButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TextJumlah)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(TextCode, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(TextJumlah)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(ButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(269, 269, 269))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(ButtonNew, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                         .addComponent(ButtonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(ButtonRemove))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,13 +256,13 @@ public class main extends javax.swing.JFrame {
                     .addComponent(TextJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonRemove))
+                    .addComponent(ButtonRemove)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonSave)
-                    .addComponent(ButtonCancel))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addComponent(ButtonCancel)
+                    .addComponent(ButtonSave))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -305,7 +318,7 @@ public class main extends javax.swing.JFrame {
 
     private void ButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRemoveActionPerformed
         if(TabelListBarang.getSelectedRow()<0){
-            String str = "Hapus Item";
+            String str = "Pilihlah Barang yang akan di hapus";
             JOptionPane.showMessageDialog(this, str,"Informasi", JOptionPane.INFORMATION_MESSAGE);
         } else {
             int count = TabelListBarang.getSelectedRows().length;
@@ -315,6 +328,10 @@ public class main extends javax.swing.JFrame {
         }
         this.CekKeranjang();
     }//GEN-LAST:event_ButtonRemoveActionPerformed
+
+    private void ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,12 +374,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton ButtonNew;
     private javax.swing.JButton ButtonRemove;
     private javax.swing.JButton ButtonSave;
-    private javax.swing.JComboBox<String> ComboBox;
-    private javax.swing.JTextArea TabelListBarang;
+    private javax.swing.JComboBox<Item> ComboBox;
+    private javax.swing.JTable TabelListBarang;
     private javax.swing.JTextField TextCode;
     private javax.swing.JTextField TextJumlah;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
